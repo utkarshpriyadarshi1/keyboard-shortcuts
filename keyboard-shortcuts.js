@@ -13,7 +13,16 @@
 
     $ = (typeof $ != 'undefined') ? $ : {};
 
-    $.__config.keyboardShortcut = {};
+    var keyboardShortcut = {
+        
+        config(){
+            
+        }
+        options(){
+        
+        }
+        
+    };
     $.__private.keyboardShortcut = {};
     $.__public.keyboardShortcut = {};
 
@@ -21,7 +30,6 @@
     $.__config.keyboardShortcut.SECOND_KEY = null;
     $.__config.keyboardShortcut.SHORTCUT_REPOSITORY = [];
 
-    $.__modules.push("keyboard-shortcut");
 
     $.__private.executeKeyboardShortcut = function (keypress) {
         try {
