@@ -34,12 +34,14 @@ We are committed to providing a welcoming and inclusive environment for all cont
 ## Development Guidelines
 
 ### Code Style
+
 - Use consistent indentation (2 spaces)
 - Write meaningful variable and function names
 - Add comments for complex logic
 - Keep functions small and focused
 
 ### Testing
+
 - Write tests for new features
 - Run tests before submitting a PR:
   ```sh
@@ -48,6 +50,7 @@ We are committed to providing a welcoming and inclusive environment for all cont
 - Ensure all tests pass
 
 ### Commits
+
 - Use clear, descriptive commit messages
 - Follow the format: `[type]: description`
 - Types: `feat` (feature), `fix` (bug fix), `docs` (documentation), `style` (formatting), `test` (tests), `refactor` (refactoring)
@@ -79,7 +82,9 @@ We are committed to providing a welcoming and inclusive environment for all cont
 ## Reporting Issues
 
 ### Bug Reports
+
 Include:
+
 - Clear description of the bug
 - Steps to reproduce
 - Expected behavior vs actual behavior
@@ -87,7 +92,9 @@ Include:
 - Any error messages or logs
 
 ### Feature Requests
+
 Include:
+
 - Clear description of the feature
 - Use case and why it's needed
 - Examples of how it would be used
@@ -96,21 +103,25 @@ Include:
 ## Development Setup
 
 ### Build the project:
+
 ```sh
 npm run build
 ```
 
 ### Run tests:
+
 ```sh
 npm test
 ```
 
 ### Watch for changes during development:
+
 ```sh
 npm run dev
 ```
 
 ## Project Structure
+
 ```
 keyboard-shortcuts/
 ├── src/              # Source code
@@ -124,11 +135,12 @@ keyboard-shortcuts/
 
 - Check existing issues and discussions
 - Open a new issue with your question
-- Review the documentation in `/docs`
+- Review the sample integrations in `/sample`
 
 ## Recognition
 
 Contributors who submit accepted pull requests will be recognized in:
+
 - Release notes
 - Contributors list in README
 

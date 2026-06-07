@@ -21,8 +21,9 @@ This library allows for the creation of custom keyboard shortcuts for web applic
 
 ## Technologies Used
 
-- **JavaScript** - Core functionality (88.2% of codebase)
-- **HTML** - Examples and documentation (11.8% of codebase)
+- **TypeScript** - Core functionality & React hooks
+- **HTML & JS** - Sample integration demos
+- **Vitest & happy-dom** - Automated unit testing suite
 
 ## Prerequisites
 
@@ -47,12 +48,14 @@ yarn add keyboard-shortcuts-library
 ### Manual Installation
 
 1. Clone the repository:
+
    ```sh
    git clone https://github.com/utkarshpriyadarshi1/keyboard-shortcuts.git
    cd keyboard-shortcuts
    ```
 
 2. Navigate to the project directory:
+
    ```sh
    cd keyboard-shortcuts
    ```
@@ -92,9 +95,13 @@ yarn add keyboard-shortcuts-library
 const manager = new KeyboardShortcutManager({ targetElement: document.getElementById('editor') });
 
 // Register shortcut with configuration options
-manager.register('Ctrl+Z', () => {
-  console.log('Undo action');
-}, { scope: 'editor', description: 'Undo last action' });
+manager.register(
+  'Ctrl+Z',
+  () => {
+    console.log('Undo action');
+  },
+  { scope: 'editor', description: 'Undo last action' },
+);
 
 // Unregister a shortcut
 manager.unregister('Ctrl+S');
@@ -144,14 +151,18 @@ import { useKeyboardShortcut, useKeyboardShortcuts } from 'keyboard-shortcuts-li
 
 function MyComponent() {
   // Register a single shortcut
-  useKeyboardShortcut('Ctrl+S', (event) => {
-    console.log('Document saved!');
-  }, { scope: 'editor', description: 'Save document' });
+  useKeyboardShortcut(
+    'Ctrl+S',
+    (event) => {
+      console.log('Document saved!');
+    },
+    { scope: 'editor', description: 'Save document' },
+  );
 
   // Or register multiple shortcuts at once
   useKeyboardShortcuts([
     { keyCombo: 'Ctrl+Z', callback: () => console.log('Undo!') },
-    { keyCombo: 'Ctrl+Y', callback: () => console.log('Redo!') }
+    { keyCombo: 'Ctrl+Y', callback: () => console.log('Redo!') },
   ]);
 
   return <div>My Editor Component</div>;
@@ -167,6 +178,7 @@ const manager = new KeyboardShortcutManager(options);
 ```
 
 #### Options
+
 - **targetElement** (HTMLElement | Document, optional): The target element to listen to keyboard events on. Defaults to `document`.
 
 ### Methods
@@ -182,9 +194,13 @@ Registers a new keyboard shortcut.
   - **description** (string): Optional description of what the shortcut does
 
 ```javascript
-manager.register('Ctrl+S', () => {
-  saveDocument();
-}, { description: 'Save document', scope: 'document-editor' });
+manager.register(
+  'Ctrl+S',
+  () => {
+    saveDocument();
+  },
+  { description: 'Save document', scope: 'document-editor' },
+);
 ```
 
 #### `unregister(keyCombo)`
@@ -308,9 +324,8 @@ Found a bug or have a suggestion? Please [open an issue](https://github.com/utka
 
 ## Support
 
-- 📖 Check the [docs](./docs/) folder for detailed documentation
+- 📖 Check the [sample/](./sample/) folder for detailed code integration examples
 - 💬 Open an issue for questions or discussions
-- 📝 Review [examples](./docs/examples.md) for usage patterns
 
 ## Roadmap
 
@@ -318,8 +333,8 @@ Found a bug or have a suggestion? Please [open an issue](https://github.com/utka
 - [ ] Platform-specific shortcuts (Mac Cmd key)
 - [ ] Shortcut conflict detection
 - [ ] Built-in shortcut presets (VS Code, Emacs, Vim-style)
-- [ ] TypeScript support
-- [ ] Improved documentation and examples
+- [x] TypeScript support
+- [x] Improved documentation and examples
 - [ ] Performance benchmarking
 
 ## License
@@ -327,6 +342,7 @@ Found a bug or have a suggestion? Please [open an issue](https://github.com/utka
 This project is licensed under the **GNU General Public License v3.0** - see the [LICENSE](./LICENSE) file for details.
 
 Under GPL-3.0:
+
 - ✅ You can use this in any project (proprietary or open source)
 - ✅ You can modify the code
 - ✅ You can distribute it
@@ -353,7 +369,7 @@ Under GPL-3.0:
 
 ---
 
-**Status:** Initial working fine. 
+**Status:** Initial working fine.
 **Any suggestions, errors, or issues are warmly welcomed!** 🎉
 
 **Help us improve!** ⭐ Star this repository if you find it useful, and consider contributing!
