@@ -115,8 +115,7 @@ npm run dev
 keyboard-shortcuts/
 ├── src/              # Source code
 ├── dist/             # Compiled/built files
-├── docs/             # Documentation
-├── tests/            # Test files
+├── test/             # Unit test files
 ├── package.json      # Project metadata
 └── README.md         # Project README
 ```

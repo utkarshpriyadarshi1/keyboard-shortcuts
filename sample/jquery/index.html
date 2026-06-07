@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>jQuery Plugin Shortcut Demo</title>
+    <style>
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #f8fafc;
+        color: #0f172a;
+      }
+      .card {
+        background: white;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        border: 1px solid #e2e8f0;
+      }
+      .interactive-box {
+        border: 2px dashed #94a3b8;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        margin: 20px 0;
+        background: #fdfdfd;
+        transition: all 0.2s;
+        outline: none;
+      }
+      .interactive-box:focus {
+        border-color: #3b82f6;
+        background: #eff6ff;
+      }
+      kbd {
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        border-radius: 4px;
+        padding: 2px 6px;
+        font-family: monospace;
+        font-size: 0.9em;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+      }
+      .log {
+        background: #1e293b;
+        color: #38bdf8;
+        padding: 12px;
+        border-radius: 6px;
+        font-family: monospace;
+        max-height: 150px;
+        overflow-y: auto;
+      }
+    </style>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  </head>
+  <body>
+    <div class="card">
+      <h1>jQuery Plugin Demo</h1>
+      <p>This demo binds shortcuts to a specific DOM element using our jQuery extension plugin.</p>
+
+      <div class="interactive-box" id="editor-area" tabindex="0">
+        <p>Click inside this box to focus and trigger shortcuts!</p>
+        <p>Shortcuts only fire when this area has keyboard focus:</p>
+        <p><kbd>Ctrl+K</kbd> - Trigger simulated link addition</p>
+      </div>
+
+      <div class="log" id="log-output">Logs will appear here...</div>
+    </div>
+
+    <!-- Include compiled global bundle -->
+    <script src="../../dist/keyboard-shortcuts.global.js"></script>
+    <script>
+      $(document).ready(function () {
+        const $logEl = $('#log-output');
+        function log(message) {
+          const time = new Date().toLocaleTimeString();
+          $logEl.append(`<br>[${time}] ${message}`);
+          $logEl.scrollTop($logEl[0].scrollHeight);
+        }
+
+        // Target the editor area and make sure it has tabindex focus
+        const $editor = $('#editor-area');
+
+        // Initialize plugin
+        $editor.keyboardShortcuts({});
+
+        // Register shortcut on the target element
+        $editor.keyboardShortcuts(
+          'register',
+          'Ctrl+K',
+          function () {
+            log('Ctrl+K pressed: Inserting a link in editor!');
+          },
+          { scope: 'editor' },
+        );
+      });
+    </script>
+  </body>
+</html>

@@ -67,19 +67,19 @@ yarn add keyboard-shortcuts-library
 ### Basic Usage
 
 ```html
-<script src="path/to/keyboard-shortcuts.js"></script>
+<script src="path/to/keyboard-shortcuts.global.js"></script>
 
 <script>
   // Initialize the library
-  const shortcuts = new KeyboardShortcuts();
+  const manager = new KeyboardShortcutManager();
 
-  // Add a simple shortcut
-  shortcuts.add('Ctrl+S', () => {
+  // Register a simple shortcut
+  manager.register('Ctrl+S', () => {
     console.log('Save triggered!');
   });
 
-  // Add another shortcut
-  shortcuts.add('Alt+N', () => {
+  // Register another shortcut
+  manager.register('Alt+N', () => {
     console.log('New file created!');
   });
 </script>
@@ -88,22 +88,74 @@ yarn add keyboard-shortcuts-library
 ### Advanced Usage
 
 ```javascript
-// Create shortcuts instance
-const shortcuts = new KeyboardShortcuts();
+// Create manager instance with custom target element
+const manager = new KeyboardShortcutManager({ targetElement: document.getElementById('editor') });
 
-// Add shortcut with context
-shortcuts.add('Ctrl+Z', () => {
+// Register shortcut with configuration options
+manager.register('Ctrl+Z', () => {
   console.log('Undo action');
-}, { context: 'editor' });
+}, { scope: 'editor', description: 'Undo last action' });
 
-// Remove a shortcut
-shortcuts.remove('Ctrl+S');
+// Unregister a shortcut
+manager.unregister('Ctrl+S');
 
 // Get all shortcuts
-const allShortcuts = shortcuts.getAll();
+const allShortcuts = manager.getShortcuts();
 
 // Clear all shortcuts
-shortcuts.clear();
+manager.clearAll();
+
+// Destroy instance and remove event listeners
+manager.destroy();
+```
+
+### jQuery Plugin Extension (Optional)
+
+If jQuery is loaded in your environment, you can optionally use it as a jQuery plugin:
+
+```javascript
+// Initialize on target element
+const $editor = $('#editor').keyboardShortcuts({ scope: 'editor' });
+
+// Register shortcuts
+$editor.keyboardShortcuts('register', 'Ctrl+S', () => {
+  console.log('Save editor content!');
+});
+
+// Retrieve registered shortcuts
+const shortcuts = $editor.keyboardShortcuts('getShortcuts');
+
+// Unregister a shortcut
+$editor.keyboardShortcuts('unregister', 'Ctrl+S');
+
+// Clear all shortcuts
+$editor.keyboardShortcuts('clearAll');
+
+// Destroy the manager instance
+$editor.keyboardShortcuts('destroy');
+```
+
+### React Hook Extension (Optional)
+
+In React projects, you can use the built-in React hooks to declare keyboard shortcuts. The hook automatically handles registering the shortcut on mount and unregistering/cleaning it up on unmount to prevent memory leaks.
+
+```javascript
+import { useKeyboardShortcut, useKeyboardShortcuts } from 'keyboard-shortcuts-library/react';
+
+function MyComponent() {
+  // Register a single shortcut
+  useKeyboardShortcut('Ctrl+S', (event) => {
+    console.log('Document saved!');
+  }, { scope: 'editor', description: 'Save document' });
+
+  // Or register multiple shortcuts at once
+  useKeyboardShortcuts([
+    { keyCombo: 'Ctrl+Z', callback: () => console.log('Undo!') },
+    { keyCombo: 'Ctrl+Y', callback: () => console.log('Redo!') }
+  ]);
+
+  return <div>My Editor Component</div>;
+}
 ```
 
 ## API Documentation
@@ -111,48 +163,61 @@ shortcuts.clear();
 ### Constructor
 
 ```javascript
-const shortcuts = new KeyboardShortcuts(options);
+const manager = new KeyboardShortcutManager(options);
 ```
+
+#### Options
+- **targetElement** (HTMLElement | Document, optional): The target element to listen to keyboard events on. Defaults to `document`.
 
 ### Methods
 
-#### `add(keys, callback, options)`
+#### `register(keyCombo, callback, config)`
 
-Adds a new keyboard shortcut.
+Registers a new keyboard shortcut.
 
-- **keys** (string): The key combination (e.g., 'Ctrl+S', 'Alt+D')
+- **keyCombo** (string): The key combination (e.g., 'Ctrl+S', 'Alt+D')
 - **callback** (function): Function to execute when shortcut is triggered
-- **options** (object, optional): Additional configuration
+- **config** (object, optional): Additional configuration
+  - **scope** (string): Optional scope/context for the shortcut
+  - **description** (string): Optional description of what the shortcut does
 
 ```javascript
-shortcuts.add('Ctrl+S', () => {
+manager.register('Ctrl+S', () => {
   saveDocument();
-}, { description: 'Save document' });
+}, { description: 'Save document', scope: 'document-editor' });
 ```
 
-#### `remove(keys)`
+#### `unregister(keyCombo)`
 
 Removes a keyboard shortcut.
 
 ```javascript
-shortcuts.remove('Ctrl+S');
+manager.unregister('Ctrl+S');
 ```
 
-#### `getAll()`
+#### `getShortcuts()`
 
 Returns all registered shortcuts.
 
 ```javascript
-const shortcuts = shortcuts.getAll();
+const shortcuts = manager.getShortcuts();
 console.log(shortcuts);
 ```
 
-#### `clear()`
+#### `clearAll()`
 
 Removes all shortcuts.
 
 ```javascript
-shortcuts.clear();
+manager.clearAll();
+```
+
+#### `destroy()`
+
+Removes all shortcuts and unbinds all keydown event listeners from the target element.
+
+```javascript
+manager.destroy();
 ```
 
 ## Deployment
@@ -177,10 +242,9 @@ cp -r dist/ /var/www/html/keyboard-shortcuts/
 ```
 keyboard-shortcuts/
 ├── src/                 # Source code
-│   └── index.js        # Main library file
-├── dist/               # Compiled code (ready for deployment)
-├── docs/               # Documentation files
-├── tests/              # Unit tests
+│   └── keyboard-shortcuts.ts # Main TypeScript library file
+├── dist/               # Compiled/bundled assets (ESM, CJS, Browser)
+├── test/               # Unit tests using Vitest & happy-dom
 ├── .gitignore          # Git ignore rules
 ├── package.json        # Project metadata and dependencies
 ├── LICENSE             # GPL-3.0 License
