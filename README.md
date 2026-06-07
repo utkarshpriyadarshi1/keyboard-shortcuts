@@ -1,87 +1,295 @@
 # Keyboard Shortcuts Library
 
+A lightweight, flexible JavaScript library for creating and managing custom keyboard shortcuts in web applications.
+
+[![License: GPL-3.0](https://img.shields.io/badge/License-GPL%203.0-blue.svg)](https://opensource.org/licenses/GPL-3.0)
+![JavaScript](https://img.shields.io/badge/Language-JavaScript-yellow.svg)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)
+
 ## Overview
-This library allows for the creation of custom keyboard shortcuts for web applications. It is designed to be flexible and easy to integrate into any JavaScript-based project.
+
+This library allows for the creation of custom keyboard shortcuts for web applications. It is designed to be flexible and easy to integrate into any JavaScript-based project. Whether you're building a productivity app, a code editor, or any web application that needs keyboard shortcuts, this library has you covered.
 
 ## Features
-- Define custom keyboard shortcuts
-- Easy integration with any JavaScript project
-- Lightweight and efficient
-- Supports complex key combinations
+
+- ✨ **Easy to use** - Simple API for defining and managing shortcuts
+- 🎯 **Flexible** - Support for complex key combinations
+- ⚡ **Lightweight** - Minimal footprint, no dependencies
+- 🔌 **Easy integration** - Works with any JavaScript project
+- 🛡️ **Type-safe** - Well-documented with clear examples
+- 📱 **Cross-platform** - Works on all modern browsers
 
 ## Technologies Used
-- JavaScript
-- HTML
+
+- **JavaScript** - Core functionality (88.2% of codebase)
+- **HTML** - Examples and documentation (11.8% of codebase)
 
 ## Prerequisites
-- Node.js (for development)
-- npm (for package management)
 
-## Installation Guide
+- **Node.js** (v12 or higher) - for development and building
+- **npm** or **yarn** - for package management
+- **Modern browser** - Chrome, Firefox, Safari, Edge with ES6+ support
+
+## Installation
+
+### Via npm
+
+```sh
+npm install keyboard-shortcuts-library
+```
+
+### Via yarn
+
+```sh
+yarn add keyboard-shortcuts-library
+```
+
+### Manual Installation
+
 1. Clone the repository:
-    ```sh
-    git clone https://github.com/utkarshpriyadarshi1/keyboard-shortcuts.git
-    ```
+   ```sh
+   git clone https://github.com/utkarshpriyadarshi1/keyboard-shortcuts.git
+   cd keyboard-shortcuts
+   ```
+
 2. Navigate to the project directory:
-    ```sh
-    cd keyboard-shortcuts
-    ```
+   ```sh
+   cd keyboard-shortcuts
+   ```
+
 3. Install the dependencies:
-    ```sh
-    npm install
-    ```
+   ```sh
+   npm install
+   ```
 
-## Deployment Guide
-1. Build the project:
-    ```sh
-    npm run build
-    ```
-2. Deploy the contents of the `dist` directory to your web server.
+## Quick Start
 
-## Usage Guide
-1. Import the library:
-    ```html
-    <script src="path/to/keyboard-shortcuts.js"></script>
-    ```
-2. Define your keyboard shortcuts:
-    ```javascript
-    const shortcuts = new KeyboardShortcuts();
-    shortcuts.add('Ctrl+S', () => {
-        console.log('Save');
-    });
-    ```
+### Basic Usage
 
-## Contributing Guide
-1. Fork the repository.
-2. Create a new branch:
-    ```sh
-    git checkout -b feature-branch
-    ```
-3. Make your changes and commit them:
-    ```sh
-    git commit -m "Description of changes"
-    ```
-4. Push to the branch:
-    ```sh
-    git push origin feature-branch
-    ```
-5. Create a pull request.
+```html
+<script src="path/to/keyboard-shortcuts.js"></script>
 
-## Security Guidelines
-- Report any security vulnerabilities to the repository maintainer.
-- Follow best practices for secure coding.
-- Regularly update dependencies to patch known vulnerabilities.
+<script>
+  // Initialize the library
+  const shortcuts = new KeyboardShortcuts();
+
+  // Add a simple shortcut
+  shortcuts.add('Ctrl+S', () => {
+    console.log('Save triggered!');
+  });
+
+  // Add another shortcut
+  shortcuts.add('Alt+N', () => {
+    console.log('New file created!');
+  });
+</script>
+```
+
+### Advanced Usage
+
+```javascript
+// Create shortcuts instance
+const shortcuts = new KeyboardShortcuts();
+
+// Add shortcut with context
+shortcuts.add('Ctrl+Z', () => {
+  console.log('Undo action');
+}, { context: 'editor' });
+
+// Remove a shortcut
+shortcuts.remove('Ctrl+S');
+
+// Get all shortcuts
+const allShortcuts = shortcuts.getAll();
+
+// Clear all shortcuts
+shortcuts.clear();
+```
+
+## API Documentation
+
+### Constructor
+
+```javascript
+const shortcuts = new KeyboardShortcuts(options);
+```
+
+### Methods
+
+#### `add(keys, callback, options)`
+
+Adds a new keyboard shortcut.
+
+- **keys** (string): The key combination (e.g., 'Ctrl+S', 'Alt+D')
+- **callback** (function): Function to execute when shortcut is triggered
+- **options** (object, optional): Additional configuration
+
+```javascript
+shortcuts.add('Ctrl+S', () => {
+  saveDocument();
+}, { description: 'Save document' });
+```
+
+#### `remove(keys)`
+
+Removes a keyboard shortcut.
+
+```javascript
+shortcuts.remove('Ctrl+S');
+```
+
+#### `getAll()`
+
+Returns all registered shortcuts.
+
+```javascript
+const shortcuts = shortcuts.getAll();
+console.log(shortcuts);
+```
+
+#### `clear()`
+
+Removes all shortcuts.
+
+```javascript
+shortcuts.clear();
+```
+
+## Deployment
+
+### Build the project:
+
+```sh
+npm run build
+```
+
+### Deploy:
+
+The compiled files in the `dist/` directory are ready for deployment:
+
+```sh
+# Copy dist folder to your web server
+cp -r dist/ /var/www/html/keyboard-shortcuts/
+```
 
 ## Project Structure
-- `src/`: Source code for the library
-- `dist/`: Compiled code ready for deployment
-- `docs/`: Documentation files
-- `tests/`: Unit tests
 
-### Status: Initial working fine.
-### Current Limitation: 
-1. Key combo must be a pair of two keys.
-2. Key combo must have first key as either ALT, CTRL or SHIFT key.
-3. Use of key '+' is not allowed.
+```
+keyboard-shortcuts/
+├── src/                 # Source code
+│   └── index.js        # Main library file
+├── dist/               # Compiled code (ready for deployment)
+├── docs/               # Documentation files
+├── tests/              # Unit tests
+├── .gitignore          # Git ignore rules
+├── package.json        # Project metadata and dependencies
+├── LICENSE             # GPL-3.0 License
+├── CONTRIBUTING.md     # Contribution guidelines
+└── README.md           # This file
+```
 
-***Any suggestions, errors or issues are warmly welcomed.***
+## Current Limitations
+
+⚠️ Please note the following limitations:
+
+1. **Key pairs only** - Key combinations must consist of exactly two keys
+2. **Modifier keys** - The first key must be either `ALT`, `CTRL`, or `SHIFT`
+3. **Special character** - The `+` character cannot be used in shortcuts
+
+**Future versions will address these limitations!**
+
+## Security Guidelines
+
+- 🔒 **Report vulnerabilities responsibly** - Email security concerns to the repository maintainer
+- 📦 **Keep dependencies updated** - Regularly run `npm update` to patch vulnerabilities
+- 🛡️ **Follow secure coding practices** - Avoid evaluating user input as code
+- 🔐 **Validate inputs** - Always sanitize and validate keyboard input
+
+## Contributing
+
+We welcome contributions from the community! Whether you want to report bugs, suggest features, or submit code, please:
+
+1. **Read our [Contributing Guidelines](./CONTRIBUTING.md)**
+2. **Check existing issues** to avoid duplicates
+3. **Follow our code style** and conventions
+4. **Write tests** for new features
+5. **Submit a pull request** with a clear description
+
+### Quick Contribution Steps
+
+```bash
+# Fork the repository
+git clone https://github.com/your-username/keyboard-shortcuts.git
+
+# Create a feature branch
+git checkout -b feature/amazing-feature
+
+# Make changes and commit
+git commit -m 'feat: add amazing feature'
+
+# Push to your fork
+git push origin feature/amazing-feature
+
+# Create a pull request on GitHub
+```
+
+## Reporting Issues
+
+Found a bug or have a suggestion? Please [open an issue](https://github.com/utkarshpriyadarshi1/keyboard-shortcuts/issues) with:
+
+- Clear title and description
+- Steps to reproduce (for bugs)
+- Expected vs actual behavior
+- Your environment details
+
+## Support
+
+- 📖 Check the [docs](./docs/) folder for detailed documentation
+- 💬 Open an issue for questions or discussions
+- 📝 Review [examples](./docs/examples.md) for usage patterns
+
+## Roadmap
+
+- [ ] Support for multi-key combinations (more than 2 keys)
+- [ ] Platform-specific shortcuts (Mac Cmd key)
+- [ ] Shortcut conflict detection
+- [ ] Built-in shortcut presets (VS Code, Emacs, Vim-style)
+- [ ] TypeScript support
+- [ ] Improved documentation and examples
+- [ ] Performance benchmarking
+
+## License
+
+This project is licensed under the **GNU General Public License v3.0** - see the [LICENSE](./LICENSE) file for details.
+
+Under GPL-3.0:
+- ✅ You can use this in any project (proprietary or open source)
+- ✅ You can modify the code
+- ✅ You can distribute it
+- ⚠️ You must disclose changes and use the same license
+
+## Acknowledgments
+
+- Thanks to all [contributors](https://github.com/utkarshpriyadarshi1/keyboard-shortcuts/graphs/contributors) who have helped improve this library
+- Inspired by keyboard shortcut libraries in popular code editors
+- Community feedback and suggestions
+
+## Author
+
+**Utkarsh Priyadarshi**
+
+- GitHub: [@utkarshpriyadarshi1](https://github.com/utkarshpriyadarshi1)
+- Open to questions, suggestions, and collaboration!
+
+## Contact & Support
+
+- 🐛 **Report bugs**: [Open an issue](https://github.com/utkarshpriyadarshi1/keyboard-shortcuts/issues)
+- 💡 **Feature requests**: [GitHub Discussions](https://github.com/utkarshpriyadarshi1/keyboard-shortcuts/discussions)
+- 📧 **Questions?**: Feel free to open an issue!
+
+---
+
+**Status:** Initial working fine. 
+**Any suggestions, errors, or issues are warmly welcomed!** 🎉
+
+**Help us improve!** ⭐ Star this repository if you find it useful, and consider contributing!
